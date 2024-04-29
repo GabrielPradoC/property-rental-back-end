@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  app:
+    container_name: rental-property-app
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+        DATABASE_PASSWORD: 0yIq2xWWkEAzU3ZdX9zw522OZlzRHbC2
+        DATABASE_NAME: propertyRental
+        DATABASE_USER: PropertyRentalAdmin
+        DATABASE_PORT: 3306
+        DATABASE_URL: database
+    volumes:
+      - ./:/app
+    ports:
+      - 3002:3000
+    networks:
+      - rental-property-network
+    restart: unless-stopped
+  database:
+    image: mysql:5.7
+    container_name: rental-property-database
+    ports:
+      - "3306:3036"
+    environment:
+        MYSQL_ROOT_PASSWORD: fd1ERfn7BJeOl1sQpnMylfzaB7ShD6HX
+        MYSQL_DATABASE: propertyRental
+        MYSQL_USER: PropertyRentalAdmin
+        MYSQL_PASSWORD: 0yIq2xWWkEAzU3ZdX9zw522OZlzRHbC2
+    networks:
+      - rental-property-network
+networks:
+  rental-property-network:
+    driver: bridge
