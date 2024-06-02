@@ -1,21 +1,21 @@
 // Libs
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 
 // Controllers
 import { HealthcheckController } from '../../../../src/modules/healthcheck/healthcheck.controller';
 
+// Utils
+import { TestUtils } from '../../../test-utils';
+
 describe('HealthcheckController', () => {
   // Configuration
   let app: INestApplication;
 
   beforeAll(async () => {
-    const moduleRef: TestingModule = await Test.createTestingModule({
+    app = await TestUtils.createApp({
       controllers: [HealthcheckController],
-    }).compile();
-
-    app = moduleRef.createNestApplication();
+    });
 
     await app.init();
   });
@@ -25,6 +25,11 @@ describe('HealthcheckController', () => {
   });
 
   // Tests
+
+  it('should be defined', () => {
+    // Assert
+    expect(app).toBeDefined();
+  });
 
   describe('GET /healthcheck', () => {
     const url = '/healthcheck';

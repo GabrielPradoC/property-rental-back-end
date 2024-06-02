@@ -1,15 +1,21 @@
 // Libs
-import { Controller, Get } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, HttpStatus } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-// Responses
-import { HealthcheckResponse } from './healthcheckResponse.entity';
+// DTOs
+import { HealthcheckResponse } from './dtos/healthcheckResponse.dto';
+
+// Decorators
+import { ApiResponses, Public } from '../../common/decorators';
 
 @ApiTags('Healthcheck')
 @Controller()
 export class HealthcheckController {
+  @Public()
   @ApiOperation({ description: 'Returns an object with the current date' })
-  @ApiOkResponse({ description: 'Success', type: HealthcheckResponse })
+  @ApiResponses({
+    [HttpStatus.OK]: { description: 'Success', type: HealthcheckResponse },
+  })
   @Get('/healthcheck')
   public healthcheck(): HealthcheckResponse {
     return { date: new Date().toISOString() };

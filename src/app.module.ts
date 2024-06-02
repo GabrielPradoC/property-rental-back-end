@@ -1,9 +1,11 @@
 // Libs
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Modules
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { HealthcheckModule } from './modules/healthcheck/healthcheck.module';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -14,10 +16,14 @@ import { HealthcheckModule } from './modules/healthcheck/healthcheck.module';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [],
       synchronize: false,
+      autoLoadEntities: true,
+      migrations: ['dist/migrations/**.js'],
+      migrationsRun: true,
     }),
     HealthcheckModule,
+    UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
