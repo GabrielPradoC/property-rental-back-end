@@ -12,8 +12,10 @@ services:
         DATABASE_USER: PropertyRentalAdmin
         DATABASE_PORT: 3306
         DATABASE_URL: database
+        BCRYPT_SALT_ROUNDS: 10
+        JWT_SECRET: ebb8a19f-2331-4c00-bdbf-14e4b16642cc
     volumes:
-      - ./:/app
+      - ./src:/app/src
     ports:
       - 3002:3000
     networks:
